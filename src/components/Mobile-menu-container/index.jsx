@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useMainContext } from "../Context/MainContext";
 import { Link } from "react-router-dom";
-
+import { useMainContext } from "@/contexts/MainContext";
+import { useNavigate, useLocation } from "react-router-dom";
 const MENU = {
   menu: "menu",
   categories: "categories",
@@ -35,7 +35,15 @@ const MobileMenuContainer = () => {
 
   const [selectedTab, setSelectedTab] = useState(MENU.menu);
 
-  const [selectedIndex, setSelectedIndex] = useState()
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Lấy giá trị `selectedIndex` từ URL
+  const searchParams = new URLSearchParams(location.search);
+
+  const initialIndex = searchParams.get('index') || 0;
+
+  const [selectedIndex, setSelectedIndex] = useState(parseInt(initialIndex, 10));
 
   const _onTabChange = (e, tab) => {
     setSelectedTab(tab);
@@ -43,7 +51,10 @@ const MobileMenuContainer = () => {
    
   const _onIndexChange = (index) => {
 
-    setSelectedIndex(index)
+    setSelectedIndex(index);
+    // Cập nhật URL với chỉ số mới
+    searchParams.set('index', index);
+    navigate({ search: searchParams.toString() });
   }
 
   return (

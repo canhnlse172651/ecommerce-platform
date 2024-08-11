@@ -1,23 +1,27 @@
-const Input = ({ label, required, err, renderInput, ...rest }) => {
+import { forwardRef } from "react";
 
-    // renderInput is a functional component was called outside 
-    // then excute at Input component and push out parameter (rest, err)
-    console.log('err', err)
-    return (
-      <div className="form-group ">
-        <label className="label">
-          {label} {required && <span>*</span>}
-        </label>
-        {renderInput?.({ ...rest, err}) || (
-          <input
-          type="text"
-            {...rest}
-            className={`form__input ${err ? "formerror" : ""}`}
-          />
-        )}
-        {err && <p className="error">{err}</p>}
-      </div>
-    );
-  };
+
+const Input = ({ label, id, type = 'text', error, required, ...inputProps }, ref ) => {
+
   
-  export default Input;
+ 
+  
+
+  return (
+    <div className="form-group">
+      <label htmlFor={id}>
+        {label} {required && '*'}
+      </label>
+      
+      <input
+       ref={ref}
+        id={id}
+        type={type}
+        className={`form-control ${error ? 'input-error' : ''}`}
+        {...inputProps}
+      />
+      {error && <p className="form-error">{error}</p>}
+    </div>
+  );
+};
+export default forwardRef(Input);

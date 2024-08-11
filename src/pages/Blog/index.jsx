@@ -443,3 +443,5 @@ const Blog = () => {
     </main>
   );
 };
+
+export default Blog;
