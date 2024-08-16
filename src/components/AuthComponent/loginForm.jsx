@@ -1,66 +1,72 @@
 import Input from "../Input";
 import Button from "../Button";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import ComponentLoading from "../ComponentLoading";
 import { MESSAGE, REGEX } from "@/constant/validate";
-import { useAuthenContext } from "@/contexts/AuthenContext";
+import { useDispatch, useSelector } from "react-redux";
+import { handleLogin } from "@/store/Reducer/authReducer";
+import useDebounce from "@/hooks/useDebounce";
+import { useEffect } from "react";
+// import { useAuthenContext } from "@/contexts/AuthenContext";
 
 const LoginForm = () => {
-  
-  const { handleLogin} = useAuthenContext()
-  const [loading , setLoading] = useState(false)
+  // const { handleLogin} = useAuthenContext()
+
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
 
   const {
     register,
     handleSubmit,
-    formState : {errors},
+    formState: { errors },
   } = useForm();
 
-
   const onSubmit = async (data) => {
-    
-         if(data && !loading){
-          setLoading(true);
-          try{
-            handleLogin(data, () => {
-              setTimeout(() => {
-                setLoading(false)
-                  document.body.style.overflow = "auto"
-              },300)
-            })
-          } catch(error){
-            console.log('error', error)
-            setLoading(false)
-          }
-         }
-  }
-  
+    if (data && !loading.login) {
+      try {
+        // handleLogin(data, () => {
+        //   setTimeout(() => {
+        //     setLoading(false)
+        //       document.body.style.overflow = "auto"
+        //   },300)
+        // })
+        const result = await dispatch(handleLogin(data)).unwrap();
 
+        if (result) {
+          setTimeout(() => {
+            document.body.style.overflow = "auto";
+          }, 300);
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
+  };
 
+  const renderLoading = useDebounce(loading.login, 1000);
 
-    return (
-      <>
+  return (
+    <>
       <form onSubmit={handleSubmit(onSubmit)} style={{ position: "relative" }}>
-      <Input
-        label="Username or email address"
-        required
-        {...register('email', {
-          required: MESSAGE.required,
-          pattern: {
-            value: REGEX.email,
-            message: MESSAGE.email,
-          },
-        })}
-        error={errors?.email?.message || ""}
-      />
+        {renderLoading && <ComponentLoading />}
+        <Input
+          label="Username or email address"
+          required
+          {...register("email", {
+            required: MESSAGE.required,
+            pattern: {
+              value: REGEX.email,
+              message: MESSAGE.email,
+            },
+          })}
+          error={errors?.email?.message || ""}
+        />
         <Input
           label="Password"
           type="password"
           required
           {...register("password", {
             required: MESSAGE.required,
-            
           })}
           error={errors?.password?.message || ""}
         />
@@ -101,9 +107,8 @@ const LoginForm = () => {
           </div>
         </div>
       </form>
-      {loading && <ComponentLoading />} {/* Show loading indicator if needed */}
     </>
-    )
-}
+  );
+};
 
 export default LoginForm;

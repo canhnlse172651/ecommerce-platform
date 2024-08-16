@@ -8,13 +8,12 @@ export const useMutation = (promise) => {
   const execute = async (payload, { onSuccess, onFail } = {}) => {
     setLoading(true);
 
-
     try {
       const res = await promise(payload);
 
       if (res.data) {
         setData(res.data);
-        onSuccess?.(res.data);   // sent data to outside
+        onSuccess?.(res.data); // sent data to outside
       }
     } catch (error) {
       setError(error);

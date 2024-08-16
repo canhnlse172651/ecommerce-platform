@@ -8,3 +8,15 @@ export const formatCurrency = (amount) => {
     currency: 'VND',
   });
 };
+
+
+export const formatCurrencyUs = (amount, currency = 'USD') => {
+  if (isNaN(amount)) {
+    return 'Invalid number';
+  }
+
+  return amount.toLocaleString('en-US', {
+    style: 'currency',
+    currency: currency,
+  });
+};

@@ -1,23 +1,20 @@
 import { forwardRef } from "react";
 
-
-const Input = ({ label, id, type = 'text', error, required, ...inputProps }, ref ) => {
-
-  
- 
-  
-
+const Input = (
+  { label, id, type = "text", error, required, ...inputProps },
+  ref
+) => {
   return (
     <div className="form-group">
       <label htmlFor={id}>
-        {label} {required && '*'}
+        {label} {required && "*"}
       </label>
-      
+
       <input
-       ref={ref}
+        ref={ref}
         id={id}
         type={type}
-        className={`form-control ${error ? 'input-error' : ''}`}
+        className={`form-control ${error ? "input-error" : ""}`}
         {...inputProps}
       />
       {error && <p className="form-error">{error}</p>}

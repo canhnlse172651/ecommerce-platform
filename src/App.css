@@ -7,3 +7,27 @@
     opacity: 0;
   }
   
+
+  .custom-control-input {
+    position: relative;
+    z-index: 1;
+     opacity: 1;
+     margin-right: 15px;
+     margin-top: 7px;
+  }
+
+
+  .noUi-horizontal .noUi-handle {
+    width: 24px !important;
+    height: 20px !important;
+    top: -3px !important;
+}
+
+.noUi-horizontal {
+    height: 6px !important;
+}
+
+.noUi-horizontal .noUi-tooltip{
+  margin-top: 6px !important;
+  height: 22px !important;
+}
