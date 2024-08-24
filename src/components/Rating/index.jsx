@@ -6,3 +6,5 @@ const RatingComp = ({ rating }) => {
 };
 
 export default RatingComp;
+
+

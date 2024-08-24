@@ -2,6 +2,7 @@ import { authenService } from "@/services/authenService";
 import { localToken } from "@/utils/token";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
+import { handleAddCart } from "./cartReducer";
 
 const initialState = {
   showModal: "",
@@ -105,6 +106,7 @@ export const handleLogin = createAsyncThunk(
         if (!!localToken) {
           message.success("Đăng nhập thành công");
           dispatch(handleGetProfile());
+          dispatch(handleAddCart());
           dispatch(handleCloseModal());
         }
         return {

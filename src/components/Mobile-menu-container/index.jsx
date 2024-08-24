@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMainContext } from "@/contexts/MainContext";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 const MENU = {
   menu: "menu",
   categories: "categories",
@@ -31,6 +32,7 @@ const PAGE = [
 ];
 
 const MobileMenuContainer = () => {
+  let { showModal } = useSelector((state) => state.auth);
   const { handleCloseMobileMenu, handleShowMobileMenu } = useMainContext();
 
   const [selectedTab, setSelectedTab] = useState(MENU.menu);
@@ -41,25 +43,34 @@ const MobileMenuContainer = () => {
   // Lấy giá trị `selectedIndex` từ URL
   const searchParams = new URLSearchParams(location.search);
 
-  const initialIndex = searchParams.get('index') || 0;
+  const initialIndex = searchParams.get("index") || 0;
 
-  const [selectedIndex, setSelectedIndex] = useState(parseInt(initialIndex, 10));
+  const [selectedIndex, setSelectedIndex] = useState(
+    parseInt(initialIndex, 10)
+  );
 
   const _onTabChange = (e, tab) => {
     setSelectedTab(tab);
   };
-   
-  const _onIndexChange = (index) => {
 
+  const _onIndexChange = (index) => {
     setSelectedIndex(index);
     // Cập nhật URL với chỉ số mới
-    searchParams.set('index', index);
+    searchParams.set("index", index);
     navigate({ search: searchParams.toString() });
-  }
+  };
 
   return (
     <>
-      <div className="mobile-menu-overlay" onClick={handleCloseMobileMenu} />
+      <div
+        className="mobile-menu-overlay"
+        onClick={handleCloseMobileMenu}
+        style={{
+          visibility: showModal ? "visible" : "hidden",
+          opacity: showModal ? 1 : 0,
+          transition: "visibility 0.3s, opacity 0.3s", // Optional: for smooth transition
+        }}
+      />
 
       <div className="mobile-menu-container">
         <div className="mobile-menu-wrapper">
@@ -123,16 +134,17 @@ const MobileMenuContainer = () => {
             >
               <nav className="mobile-nav">
                 <ul className="mobile-menu">
-                   {
-                      PAGE.map((page,index) => {
-
-                         return (
-                           <li onClick={(e)=>_onIndexChange(index)} key={index}  className={`${selectedIndex === index ? "active" : ""}`} >
-                             <Link to={page.path} >{page.content}</Link>
-                           </li>
-                         )
-                      })
-                   }
+                  {PAGE.map((page, index) => {
+                    return (
+                      <li
+                        onClick={(e) => _onIndexChange(index)}
+                        key={index}
+                        className={`${selectedIndex === index ? "active" : ""}`}
+                      >
+                        <Link to={page.path}>{page.content}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </nav>
               {/* End .mobile-nav */}

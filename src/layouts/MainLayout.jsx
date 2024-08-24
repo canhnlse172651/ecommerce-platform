@@ -8,7 +8,7 @@ import { Outlet } from "react-router-dom";
 function MainLayout() {
   return (
     <MainContextProvider>
-      <AuthenContextProvider>
+      {/* <AuthenContextProvider> */}
         <div className="page-wrapper">
           <Header />
           <Outlet />
@@ -20,7 +20,7 @@ function MainLayout() {
         <button id="scroll-top" title="Back to Top">
           <i className="icon-arrow-up"></i>
         </button>
-      </AuthenContextProvider>
+      {/* </AuthenContextProvider> */}
     </MainContextProvider>
   );
 }

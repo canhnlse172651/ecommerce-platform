@@ -8,20 +8,27 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import { PATHS } from "./constant/path";
 
-
 import { Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { handleGetProfile } from "./store/Reducer/authReducer";
+import { handleGetCart } from "./store/Reducer/cartReducer";
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+      dispatch(handleGetProfile())
+      dispatch(handleGetCart())
+  },[])
   return (
     <Routes>
       <Route path={PATHS.HOME} element={<MainLayout />}>
-      <Route index element={< Home />} />
-      <Route path={PATHS.ABOUT} element={< About />} />
-      <Route path={PATHS.CONTACT} element={< Contact />} />
-      <Route path={PATHS.PRODUCTS} element={< Product />} />
-      <Route path={PATHS.PRODUCT_DETAIL} element={< ProductDetail />} />
-      <Route path={PATHS.BLOG} element={< Blog />} />
+        <Route index element={<Home />} />
+        <Route path={PATHS.ABOUT} element={<About />} />
 
-        
+        <Route path={PATHS.CONTACT} element={<Contact />} />
+        <Route path={PATHS.PRODUCTS} element={<Product />} />
+        <Route path={PATHS.PRODUCT_DETAIL} element={<ProductDetail />} />
+        <Route path={PATHS.BLOG} element={<Blog />} />
       </Route>
     </Routes>
   );

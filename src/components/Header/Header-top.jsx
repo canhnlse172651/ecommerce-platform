@@ -6,15 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { PATHS } from "@/constant/path";
 
 const HeaderTop = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const dispatch = useDispatch();
-
-const navigate = useNavigate()
-
-const {profile,loading} = useSelector((state) => state.auth)
-
-// console.log('loading', loading)
-
+  const { profile, loading } = useSelector((state) => state.auth);
 
   return (
     <div className="header-top">
@@ -26,18 +21,16 @@ const {profile,loading} = useSelector((state) => state.auth)
         </div>
         <div className="header-right">
           {!!!localToken.get() && (
-            <ul class="top-menu top-link-menu">
+            <ul className="top-menu top-link-menu">
               <li>
                 <a
                   href="#signin-modal"
-                  data-toggle="modal"
+                  // data-toggle="modal"
                   class="top-menu-login"
                   onClick={(e) => {
                     e.preventDefault();
-                    dispatch(handleShowModal(MODAL_TYPE.login))
-
+                    dispatch(handleShowModal(MODAL_TYPE.login));
                   }}
-                  
                 >
                   <i class="icon-user"></i>Login | Resgister{" "}
                 </a>
@@ -45,13 +38,12 @@ const {profile,loading} = useSelector((state) => state.auth)
             </ul>
           )}
 
-           {
-             !!localToken.get() && (
-              <ul className="top-menu">
+          {!!localToken.get() && (
+            <ul className="top-menu">
               <li>
                 <a href="#" className="top-link-menu">
                   <i className="icon-user" />
-                 {profile?.firstName}
+                  {profile?.firstName}
                 </a>
                 <ul>
                   <li>
@@ -68,21 +60,23 @@ const {profile,loading} = useSelector((state) => state.auth)
                         </a>
                       </li>
                       <li>
-                        <a onClick={(e) => {
-                           e.preventDefault();
-                           dispatch(handleLogout())
-                           navigate(PATHS.HOME)
-                           
-
-                        }}  href="#">Sign Out</a>
+                        <a
+                          onClick={(e) => {
+                            e.preventDefault();
+                            dispatch(handleLogout());
+                            navigate(PATHS.HOME);
+                          }}
+                          href="#"
+                        >
+                          Sign Out
+                        </a>
                       </li>
                     </ul>
                   </li>
                 </ul>
               </li>
             </ul>
-             )
-           }
+          )}
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ import { RANGE_PRICE } from "@/constant/general";
 
 const ProductFillter = ({
   categories = [],
-  activeCate,
+  activeCate = [],
   handleCateFillterChange,
   handlePriceFillter,
   currentRangePrice
@@ -55,7 +55,8 @@ const ProductFillter = ({
           <label>Filters:</label>
           <a style={{cursor:"pointer"}} className="sidebar-filter-clear" onClick={(e) => {
             e.preventDefault();
-            handleCateFillterChange()
+            e.stopPropagation();
+            handleCateFillterChange();
           }} >
             Clean All
           </a>
@@ -89,9 +90,11 @@ const ProductFillter = ({
                             className="custom-control-input"
                             id= {cate?.id}
                             onChange={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation()
                               handleCateFillterChange(cate.id,e.target.checked)
                             }}
-                            checked = {activeCate?.includes(cate?.id)}
+                            checked = {activeCate?.includes(cate.id)}
                           />
                           <label
                            style={{

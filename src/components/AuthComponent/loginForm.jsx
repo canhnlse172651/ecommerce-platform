@@ -1,17 +1,12 @@
 import Input from "../Input";
-import Button from "../Button";
 import { useForm } from "react-hook-form";
 import ComponentLoading from "../ComponentLoading";
 import { MESSAGE, REGEX } from "@/constant/validate";
 import { useDispatch, useSelector } from "react-redux";
 import { handleLogin } from "@/store/Reducer/authReducer";
 import useDebounce from "@/hooks/useDebounce";
-import { useEffect } from "react";
-// import { useAuthenContext } from "@/contexts/AuthenContext";
 
 const LoginForm = () => {
-  // const { handleLogin} = useAuthenContext()
-
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.auth);
 
@@ -24,12 +19,6 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     if (data && !loading.login) {
       try {
-        // handleLogin(data, () => {
-        //   setTimeout(() => {
-        //     setLoading(false)
-        //       document.body.style.overflow = "auto"
-        //   },300)
-        // })
         const result = await dispatch(handleLogin(data)).unwrap();
 
         if (result) {

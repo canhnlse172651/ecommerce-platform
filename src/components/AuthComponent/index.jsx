@@ -1,15 +1,15 @@
 import { MODAL_TYPE } from "@/constant/general";
-import { useAuthenContext } from "@/contexts/AuthenContext";
 import LoginForm from "./loginForm";
 import RegisterForm from "./registerForm";
 import { useSelector, useDispatch } from "react-redux";
 import { handleCloseModal, handleShowModal } from "@/store/Reducer/authReducer";
 
 const AuthComponent = () => {
-  // const { profile, handleShowModal, handleModalClose, showModal } =  useAuthenContext();
 
-  const {showModal} = useSelector((state) => state.auth)
+  let {showModal} = useSelector((state) => state.auth)
   const dispatch = useDispatch()
+ 
+  console.log('🚀showModal---->', showModal); 
 
   const _onTabChange = (e, tab) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ const AuthComponent = () => {
             <button
               type="button"
               className="close"
-              data-dismiss="modal"
+              // data-dismiss="modal"
               aria-label="Close"
               onClick={_onCloseModal}
             >
