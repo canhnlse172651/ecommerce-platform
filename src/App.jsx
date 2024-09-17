@@ -6,6 +6,9 @@ import ProductDetail from "./pages/Product-detail";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import CheckoutSuccess from "./pages/Checkout-success";
 import { PATHS } from "./constant/path";
 
 import { Route, Routes } from "react-router-dom";
@@ -24,11 +27,13 @@ function App() {
       <Route path={PATHS.HOME} element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path={PATHS.ABOUT} element={<About />} />
-
         <Route path={PATHS.CONTACT} element={<Contact />} />
         <Route path={PATHS.PRODUCTS} element={<Product />} />
         <Route path={PATHS.PRODUCT_DETAIL} element={<ProductDetail />} />
         <Route path={PATHS.BLOG} element={<Blog />} />
+        <Route path={PATHS.CART} element={<Cart />} />
+        <Route path={PATHS.CHECKOUT} element={<Checkout />} />
+        <Route path={PATHS.CHECKOUT_SUCCESS} element={<CheckoutSuccess />} />
       </Route>
     </Routes>
   );

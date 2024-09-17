@@ -22,4 +22,28 @@ export const authenService = {
       },
     });
   },
+  getProvince(){
+    return axiosInstance.get(`/provinces`)
+  },
+  getProvinceById(id){
+    return axiosInstance.get(`/provinces/${id}`)
+  },
+  getDistrict(id){
+    return axiosInstance.get(`/districts?province=${id}`)
+  },
+  getDistrictById(id){
+    return axiosInstance.get(`/districts/${id}`)
+  },
+  getWard(id){
+    return axiosInstance.get(`/wards?district=${id}`)
+  },
+  getWardById(id) {
+    return axiosInstance.get(`/wards/${id}`)
+  },
+  getOrderMe(){
+    return axiosInstance.get(`/orders/me`)
+  },
+  review(payload={}){
+    return axiosInstance.post(`/reviews`,payload)
+  }
 };

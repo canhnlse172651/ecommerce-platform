@@ -130,6 +130,7 @@ const ProductDetailTop = ({
                   data-decimals={0}
                   required
                   ref={quantityRef}
+                  
                   onInput={(e) => {
                     if (e.target.value > stock) {
                       message.error("Quantity Exceeds Stock");
@@ -138,6 +139,7 @@ const ProductDetailTop = ({
                       e.target.value = 1;
                     }
                   }}
+                  onKeyDown={(e) => e.preventDefault()}// Ngăn chặn tất cả các phím nhập
                 />
               </div>
             </div>

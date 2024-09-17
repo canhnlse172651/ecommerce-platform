@@ -18,6 +18,8 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm();
 
+  console.log('🚀1---->', 1);
+
   const password = watch("password");
 
   const [loading, setLoading] = useState(false);

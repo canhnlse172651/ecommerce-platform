@@ -17,7 +17,7 @@ const Input = (
         className={`form-control ${error ? "input-error" : ""}`}
         {...inputProps}
       />
-      {error && <p className="form-error">{error}</p>}
+      {error && <p style={{lineHeight : 1.5}} className="form-error">{error}</p>}
     </div>
   );
 };

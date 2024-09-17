@@ -40,7 +40,6 @@ const ProductDetail = () => {
   const handleAddToCart = async() => {
     if (!localToken.get()) {
       dispatch(handleShowModal(MODAL_TYPE.login));
-      console.log('🚀10---->', 10);
       return; 
     }
       const quantity = quantityRef.current?.value;

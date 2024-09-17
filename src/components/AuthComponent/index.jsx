@@ -9,7 +9,6 @@ const AuthComponent = () => {
   let {showModal} = useSelector((state) => state.auth)
   const dispatch = useDispatch()
  
-  console.log('🚀showModal---->', showModal); 
 
   const _onTabChange = (e, tab) => {
     e.preventDefault();

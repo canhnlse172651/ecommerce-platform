@@ -61,6 +61,19 @@ export const cartSlice = createSlice({
     builder.addCase(handleRemoveCart.rejected, (state) => {
       state.cartLoading = false;
     });
+
+    //update cart
+    builder
+      .addCase(handleUpdateCart.pending, (state) => {
+        state.cartLoading = true;
+      })
+      .addCase(handleUpdateCart.fulfilled, (state, action) => {
+        state.cartLoading = false;
+        state.cartInfor = action.payload;
+      })
+      .addCase(handleUpdateCart.rejected, (state, action) => {
+        state.cartLoading = false;
+      });
   },
 });
 
@@ -153,46 +166,71 @@ export const handleAddCart = createAsyncThunk(
   }
 );
 
-
 export const handleRemoveCart = createAsyncThunk(
   "cart/removeProduct",
   async (actionPayload, thunkApi) => {
-    const {removeIndex} = actionPayload || {};
-    const {getState, dispatch, rejectWithValue} = thunkApi
-    const {cartInfor} = getState()?.cart || {}
+    const { removeIndex } = actionPayload || {};
+    const { getState, dispatch, rejectWithValue } = thunkApi;
+    const { cartInfor } = getState()?.cart || {};
 
-    if(removeIndex < 0) return false
+    if (removeIndex < 0) return false;
 
     try {
-      const newProduct = cartInfor.product?.fillter((_,index) => index !== removeIndex ).map((item) => item.id)
-      const newQuantity = cartInfor.quantity?.fillter((_,index) => index !== removeIndex)
-      const newVariant = cartInfor.variant?.fillter((_,index) => index !== removeIndex)
-      const newTotalProduct = cartInfor.totalProduct?.fillter((_,index) => index !== removeIndex)
+      const newProduct = cartInfor.product
+        ?.filter((_, index) => index !== removeIndex)
+        .map((item) => item.id);
+      const newQuantity = cartInfor.quantity?.filter(
+        (_, index) => index !== removeIndex
+      );
+      const newVariant = cartInfor.variant?.filter(
+        (_, index) => index !== removeIndex
+      );
+      const newTotalProduct = cartInfor.totalProduct?.filter(
+        (_, index) => index !== removeIndex
+      );
 
-      const newSubtotal = sumArrayNumber(newTotalProduct)
-      const newTotal = newSubtotal -  (cartInfor.discount ?? 0) + (cartInfor.shipping?.price ?? 0)
+      const newSubtotal = sumArrayNumber(newTotalProduct);
+      const newTotal =
+        newSubtotal -
+        (cartInfor.discount ?? 0) +
+        (cartInfor.shipping?.price ?? 0);
 
       const updatePayload = {
         ...cartInfor,
-        product : newProduct,
-        quantity : newQuantity,
-        variant : newVariant,
-        totalProduct : newTotalProduct,
-        subTotal : newSubtotal,
-        total : newTotal,
-        shipping : newProduct?.length > 0 ? cartInfor.shipping : {},
-        discount : newProduct?.length > 0 ? cartInfor.discount : 0
-      }
+        product: newProduct,
+        quantity: newQuantity,
+        variant: newVariant,
+        totalProduct: newTotalProduct,
+        subTotal: newSubtotal,
+        total: newTotal,
+        shipping: newProduct?.length > 0 ? cartInfor.shipping : {},
+        discount: newProduct?.length > 0 ? cartInfor.discount : 0,
+      };
       const cartRes = await cartService.updateCart(updatePayload);
-      dispatch(handleGetCart())
-      message.success("Delete product form cart success")
-      return cartRes?.data?.data
-
-    }catch(error){
-      rejectWithValue(error)
-      message.error("Delete product from cart fail")
-      console.log('error', error)
+      dispatch(handleGetCart());
+      message.success("Delete product form cart success");
+      return cartRes?.data?.data;
+    } catch (error) {
+      rejectWithValue(error);
+      message.error("Delete product from cart fail");
+      console.log("error", error);
     }
   }
-)
+);
 
+export const handleUpdateCart = createAsyncThunk(
+  "cart/updateCart",
+  async (actionPayload, thunkApi) => {
+    const { dispatch, rejectWithValue } = thunkApi;
+    try {
+      const cartRes = await cartService.updateCart(actionPayload);
+      dispatch(handleGetCart());
+      message.success("Update Cart Successfully");
+      return cartRes?.data?.data;
+    } catch (error) {
+      console.log("error", error);
+      message.error("Update Cart Fail");
+      return rejectWithValue(error); // Trả về lỗi qua rejectWithValue
+    }
+  }
+);

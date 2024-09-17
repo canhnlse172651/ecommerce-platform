@@ -1,3 +1,4 @@
+import { withSuccess } from "antd/es/modal/confirm";
 
 export const MODAL_TYPE = {
   login: "login",
@@ -39,4 +40,35 @@ export const SORT_OPTION = {
 export const RANGE_PRICE = {
     max : 4400,
     min : 12
+}
+
+
+export const SHIPPING_OPTION = [
+  {
+    value : "free",
+    label : "Free",
+    price : 0
+  },
+  {
+    value : "standard",
+    label : "Standard",
+    price : 10
+  },
+  {
+    value : "express",
+    label : "Express",
+    price : 20
+  }
+]
+
+export const PAYMENT_METHOD = {
+  cash : "cash",
+  card : "card"
+}
+
+export const COUPON = {
+  addSuccess : "Add Coupon Succsess",
+  addFail : "Add Coupon Fail",
+  removeSuccess : "Remove Coupon Success",
+  removeFail  : "Remove Coupon Fail"
 }

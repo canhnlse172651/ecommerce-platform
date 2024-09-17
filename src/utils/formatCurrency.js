@@ -12,7 +12,7 @@ export const formatCurrency = (amount) => {
 
 export const formatCurrencyUs = (amount, currency = 'USD') => {
   if (isNaN(amount)) {
-    return 'Invalid number';
+    return '';
   }
 
   return amount.toLocaleString('en-US', {

@@ -3,50 +3,79 @@ import { formatCurrencyUs } from "@/utils/formatCurrency";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { message, Modal } from "antd";
+
+
+
+const DropdownContainer = styled.div`
+max-height: 200px; /* Giảm chiều cao để dễ kiểm tra */
+overflow-y: scroll;
+background-color: lightgray;
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Đối với Firefox */
+scrollbar-width: thin;
+scrollbar-color: #888 #f1f1f1;
+`;
 
 const CartDropdown = ({ products, total, shipping, handleRemoveProduct }) => {
-  const DropdownContainer = styled.div`
-    max-height: 200px; /* Giảm chiều cao để dễ kiểm tra */
-    overflow-y: scroll;
-    background-color: lightgray;
+ 
 
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
+  const { confirm } = Modal;
+  const _onRemoveClick = (e, removeIndex) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    const removeProduct = products?.[removeIndex] || {};
 
-    ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background-color: #888;
-      border-radius: 10px;
-      border: 2px solid #f1f1f1;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #555;
-    }
-
-    /* Đối với Firefox */
-    scrollbar-width: thin;
-    scrollbar-color: #888 #f1f1f1;
-  `;
+    confirm({
+      title: "Do you want remove this product",
+      content: (
+        <>
+          <p>{`${removeProduct?.name || ""}`}</p>
+          <p>{`${removeProduct?.quantity || 0}  x ${formatCurrencyUs(
+            removeProduct.price
+          )}`}</p>
+        </>
+      ),
+      onOk() {
+        if (removeIndex > -1) {
+          handleRemoveProduct(removeIndex);
+        }
+      },
+      onCancel() {
+        Modal.destroyAll();
+        console.log("🚀cancel---->", cancel);
+      },
+    });
+  };
 
   return (
     <div className="dropdown cart-dropdown">
-      <a
-        href="#"
+      <Link
+       
         className="dropdown-toggle"
-        role="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-        data-display="static"
+        to={PATHS.CART}
       >
         <i className="icon-shopping-cart" />
         <span className="cart-count">{products?.length}</span>
-      </a>
+      </Link>
       <div className="dropdown-menu dropdown-menu-right" style={{ width: 350 }}>
         {products?.length > 0 ? (
           <>
@@ -56,12 +85,13 @@ const CartDropdown = ({ products, total, shipping, handleRemoveProduct }) => {
                   item || {};
                 const detailPath = PATHS.PRODUCTS + `/${slug}`;
                 let imagePath = images?.[0];
-
-                console.log("images", images);
-                if (imagePath?.split("https")?.length > 2) {
-                  imagePath = imagePath?.split("http");
-                  imagePath = "https" + imagePath[2];
+                // Tìm vị trí của "https://" cuối cùng trong chuỗi
+                const lastOccurrence = imagePath?.lastIndexOf("https://");
+                // Lấy URL từ vị trí "https://" cuối cùng
+                if (lastOccurrence > -1) {
+                  imagePath = imagePath.substring(lastOccurrence);
                 }
+
                 return (
                   <>
                     <div className="product" key={id || index}>
@@ -73,20 +103,20 @@ const CartDropdown = ({ products, total, shipping, handleRemoveProduct }) => {
                           <span className="cart-product-qty">{quantity}</span> x{" "}
                           {formatCurrencyUs(price)}
                         </span>
-                        <div style={{ display: "flex", alignItems: "center" }}  >
-                            <span style={{marginRight:"10px"}} >Color : </span>
-                            <span
-                          className="product-nav-item active"
-                          style={{
-                            background: variant, 
-                            cursor: "pointer",
-                            width: "18px", 
-                            height: "18px", 
-                            borderRadius: "50%", 
-                            border: "1px solid #ccc", 
-                            display:"block"
-                          }}
-                        ></span>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <span style={{ marginRight: "10px" }}>Color : </span>
+                          <span
+                            className="product-nav-item active"
+                            style={{
+                              background: variant,
+                              cursor: "pointer",
+                              width: "18px",
+                              height: "18px",
+                              borderRadius: "50%",
+                              border: "1px solid #ccc",
+                              display: "block",
+                            }}
+                          ></span>
                         </div>
                       </div>
                       <figure className="product-image-container">
@@ -94,7 +124,12 @@ const CartDropdown = ({ products, total, shipping, handleRemoveProduct }) => {
                           <img src={imagePath || ""} alt="product" />
                         </Link>
                       </figure>
-                      <a href="#" className="btn-remove" title="Remove Product">
+                      <a
+                        href="#"
+                        className="btn-remove"
+                        title="Remove Product"
+                        onClick={(e) => _onRemoveClick(e, index)}
+                      >
                         <i className="icon-close" />
                       </a>
                     </div>
@@ -103,19 +138,23 @@ const CartDropdown = ({ products, total, shipping, handleRemoveProduct }) => {
               })}
             </DropdownContainer>
             <div className="dropdown-cart-total">
-              <span>Total</span>
+              <span>Total : </span>
               <span className="cart-total-price">
                 {formatCurrencyUs(total)}
               </span>
             </div>
             <div className="dropdown-cart-action">
-              <a href="cart.html" className="btn btn-primary">
+              <Link to={PATHS.CART} className="btn btn-primary">
                 View Cart
-              </a>
-              <a href="checkout.html" className="btn btn-outline-primary-2">
-                <span>Checkout</span>
-                <i className="icon-long-arrow-right" />
-              </a>
+              </Link>
+             {
+                shipping?.typeShip && (
+                    <Link to={PATHS.CHECKOUT} className="btn btn-outline-primary-2">
+                    <span>Checkout</span>
+                    <i className="icon-long-arrow-right" />
+                  </Link>
+                )
+             }
             </div>
           </>
         ) : (
