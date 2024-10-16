@@ -23,6 +23,8 @@ import { handleGetCart } from "./store/Reducer/cartReducer";
 import PrivateRoute from "./components/PrivateRoute";
 import Returns from "./pages/Return";
 import PaymentMethod from "./pages/Payment-method";
+import Shipping from "./pages/Shipping";
+import Privacy from "./pages/Privacy";
 function App() {
   
   const dispatch = useDispatch();
@@ -42,6 +44,8 @@ function App() {
         <Route path={PATHS.BLOG_DETAIL} element={<BlogDetail />} />
         <Route path={PATHS.RETURN}  element={<Returns/>} />
         <Route path={PATHS.PAYMENT_METHOD}  element={<PaymentMethod/>} />
+        <Route path={PATHS.PRIVACY_POLICY}  element={<Privacy/>} />
+        <Route path={PATHS.SHIPPING}  element={<Shipping/>} />
 
 
         <Route element={<PrivateRoute />}>

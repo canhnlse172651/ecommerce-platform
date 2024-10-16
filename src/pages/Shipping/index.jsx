@@ -1,3 +1,6 @@
+import { PATHS } from "@/constant/path";
+import { Link } from "react-router-dom";
+
 const Shipping = () => {
   return (
     <main className="main">
@@ -119,10 +122,10 @@ const Shipping = () => {
                   </p>
                 </div>
                 <div className="col-auto">
-                  <a href="contact.html" className="btn btn-outline-white">
+                  <Link to={PATHS.CONTACT} className="btn btn-outline-white">
                     <span>CONTACT US</span>
                     <i className="icon-long-arrow-right" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
