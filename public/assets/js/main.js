@@ -2,7 +2,7 @@
 $(document).ready(function () {
     'use strict';
 
-    owlCarousels();
+    // owlCarousels();
     quantityInputs();
 
     // // Header Search Toggle
