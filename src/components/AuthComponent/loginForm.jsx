@@ -66,19 +66,8 @@ const LoginForm = () => {
             <span>LOG IN</span>
             <i className="icon-long-arrow-right" />
           </button>
-          <div className="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id="signin-remember"
-            />
-            <label className="custom-control-label" htmlFor="signin-remember">
-              Remember Me
-            </label>
-          </div>
-          <a href="#" className="forgot-link">
-            Forgot Your Password?
-          </a>
+         
+        
         </div>
         <div className="form-choice">
           <p className="text-center">or sign in with</p>

@@ -90,7 +90,7 @@ const RegisterForm = () => {
             <span>SIGN UP</span>
             <i className="icon-long-arrow-right" />
           </button>
-          <div className="custom-control custom-checkbox">
+          <div className="custom-control">
             <input
               type="checkbox"
               className="custom-control-input"
@@ -99,7 +99,7 @@ const RegisterForm = () => {
                 required: MESSAGE.policy,
               })}
             />
-            <label className="custom-control-label" htmlFor="register-policy">
+            <label  htmlFor="register-policy">
               I agree to the <a href="privacy-policy.html">privacy policy</a> *
             </label>
             {errors?.isAgree?.message && (
