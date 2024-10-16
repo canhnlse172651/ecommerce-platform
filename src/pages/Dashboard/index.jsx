@@ -1,8 +1,9 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { PATHS } from "@/constant/path";
 import { useDispatch } from "react-redux";
 import { handleLogout } from "@/store/Reducer/authReducer";
+import { localToken } from "@/utils/token";
 const Dashboard = () => {
 
   const dispatch = useDispatch()
@@ -20,7 +21,7 @@ const Dashboard = () => {
         <div className="container">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
+              <Link to={PATHS.HOME} >Home</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
               My Account
@@ -49,11 +50,7 @@ const Dashboard = () => {
                     </NavLink>
                   </li>
                  
-                  <li className="nav-item">
-                  <NavLink end className="nav-link"  onClick={()=>dispatch(handleLogout())} >
-                    Sign Out
-                    </NavLink>
-                  </li>
+                
                 </ul>
               </aside>
               <div className="col-md-8 col-lg-9">
