@@ -1,7 +1,6 @@
 import { PATHS } from "@/constant/path";
 import { Empty } from "antd";
 import ComponentLoading from "@/components/ComponentLoading";
-import useDebounce from "@/hooks/useDebounce";
 import { useState, useEffect } from "react";
 import ProductCart from "@/components/ProductCart";
 const ProductList = ({ isLoading, isError, productsList }) => {

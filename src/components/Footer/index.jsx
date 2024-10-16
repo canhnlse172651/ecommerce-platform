@@ -1,3 +1,6 @@
+import { PATHS } from "@/constant/path";
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <footer className="footer">
@@ -27,16 +30,14 @@ const Footer = () => {
                 <h4 className="widget-title">Useful Links</h4>
                 <ul className="widget-list">
                   <li>
-                    <a href="about.html">About Us</a>
+                    <Link to={PATHS.ABOUT}>About Us</Link>
                   </li>
                   <li>
-                    <a href="product.html">Product</a>
+                    <Link to={PATHS.PRODUCTS}>Product</Link>
                   </li>
+                 
                   <li>
-                    <a href="faq.html">FAQs</a>
-                  </li>
-                  <li>
-                    <a href="contact.html">Contact us</a>
+                    <Link to={PATHS.CONTACT}>Contact us</Link>
                   </li>
                 </ul>
               </div>
@@ -46,16 +47,16 @@ const Footer = () => {
                 <h4 className="widget-title">Customer Service</h4>
                 <ul className="widget-list">
                   <li>
-                    <a href="payment-methods.html">Payment Methods</a>
+                    <Link to={PATHS.PAYMENT_METHOD}>Payment Methods</Link>
                   </li>
                   <li>
-                    <a href="returns.html">Returns</a>
+                    <Link to={PATHS.RETURN}>Returns</Link>
                   </li>
                   <li>
-                    <a href="shipping.html">Shipping</a>
+                    <Link to={PATHS.SHIPPING}>Shipping</Link>
                   </li>
                   <li>
-                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <Link to={PATHS.PRIVACY_POLICY}>Privacy Policy</Link>
                   </li>
                 </ul>
               </div>
@@ -65,16 +66,14 @@ const Footer = () => {
                 <h4 className="widget-title">My Account</h4>
                 <ul className="widget-list">
                   <li>
-                    <a href="dashboard.html">Account Details</a>
+                    <Link to={PATHS.PROFILE.INDEX}>Account Details</Link>
                   </li>
                   <li>
-                    <a href="cart.html">View Cart</a>
+                    <Link to={PATHS.CART}>View Cart</Link>
                   </li>
+                 
                   <li>
-                    <a href="dashboard.html">My Wishlist</a>
-                  </li>
-                  <li>
-                    <a href="dashboard.html">Track My Order</a>
+                    <Link to={PATHS.PROFILE.PROFILE_ORDER}>Track My Order</Link>
                   </li>
                 </ul>
               </div>

@@ -6,7 +6,7 @@ import useQuery from "@/hooks/useQuery";
 import { useParams } from "react-router-dom";
 import ProductDetailTop from "./Product-detail-top";
 import ProductDetailTab from "./Product-detail-tab";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { handleAddCart } from "@/store/Reducer/cartReducer";
@@ -18,7 +18,9 @@ const ProductDetail = () => {
   const { slug } = useParams();
   const [selectedColor, setSelectedColor] = useState("");
   const dispatch = useDispatch();
+   
 
+  
   const quantityRef = useRef();
   const quantity = quantityRef?.current?.value;
 
@@ -26,7 +28,8 @@ const ProductDetail = () => {
     data: productDetailData,
     loading: productDetailLoading,
     error: productDetailError,
-  } = useQuery(() => productService.getProductDetail(slug));
+  } = useQuery(() => productService.getProductDetail(slug),[slug]);
+
 
   const { id : productId, description, shippingReturn, name, price, discount } =
     productDetailData || {};
@@ -71,6 +74,8 @@ const ProductDetail = () => {
       }
   };
 
+
+
   const productTopProps = {
     selectedColor,
     setSelectedColor,
@@ -79,6 +84,7 @@ const ProductDetail = () => {
     productDetailLoading,
     handleAddToCart,
     quantity,
+   
   };
 
   const productTabProps = {

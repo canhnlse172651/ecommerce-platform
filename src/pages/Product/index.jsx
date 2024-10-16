@@ -87,9 +87,9 @@ const Product = () => {
     onSortChange,
   };
 
+
   const handleCateFillterChange = (cateId = null, isChecked = null) => {
     let newCateQuery;
-
     if (queryObject.category) {
       if (Array.isArray(queryObject.category)) {
         newCateQuery = [...queryObject.category, cateId];

@@ -17,7 +17,6 @@ const Cart = () => {
   const { cartInfor, cartLoading } = useSelector((state) => state.cart);
  // quantity Ref
   const keepRef = useRef({})
-
   /// structureClone JS
   const {
     product,

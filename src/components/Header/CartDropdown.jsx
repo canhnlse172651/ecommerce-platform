@@ -3,9 +3,12 @@ import { formatCurrencyUs } from "@/utils/formatCurrency";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { message, Modal } from "antd";
-
-
+import {Modal } from "antd";
+import { localToken } from "@/utils/token";
+import { useDispatch } from "react-redux";
+import { handleShowModal } from "@/store/Reducer/authReducer";
+import { MODAL_TYPE } from "@/constant/general";
+import { useNavigate } from "react-router-dom";
 
 const DropdownContainer = styled.div`
 max-height: 200px; /* Giảm chiều cao để dễ kiểm tra */
@@ -36,7 +39,9 @@ scrollbar-color: #888 #f1f1f1;
 `;
 
 const CartDropdown = ({ products, total, shipping, handleRemoveProduct }) => {
- 
+    
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { confirm } = Modal;
   const _onRemoveClick = (e, removeIndex) => {
@@ -65,17 +70,23 @@ const CartDropdown = ({ products, total, shipping, handleRemoveProduct }) => {
       },
     });
   };
-
+  const _onMoveCart = () => {
+     if(!localToken.get()){
+        dispatch(handleShowModal(MODAL_TYPE.login))
+     }else{
+         navigate(PATHS.CART)  
+     }
+  }
   return (
     <div className="dropdown cart-dropdown">
-      <Link
+      <a
        
         className="dropdown-toggle"
-        to={PATHS.CART}
+       onClick={_onMoveCart}
       >
         <i className="icon-shopping-cart" />
         <span className="cart-count">{products?.length}</span>
-      </Link>
+      </a>
       <div className="dropdown-menu dropdown-menu-right" style={{ width: 350 }}>
         {products?.length > 0 ? (
           <>

@@ -1,5 +1,5 @@
 import { formatCurrencyUs } from "@/utils/formatCurrency";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ParseHtml from "@/components/ParseHtml";
 import RatingComp from "@/components/Rating";
 import { Link } from "react-router-dom";
@@ -8,11 +8,10 @@ import ShareLink from "@/components/ShareLink";
 import { Empty, message } from "antd";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { localToken } from "@/utils/token";
 
 const ProductDetailTop = ({
   category,
-  stock,
+  stock ,
   images,
   name,
   price,
@@ -44,7 +43,7 @@ const ProductDetailTop = ({
           <div className="product-gallery product-gallery-vertical">
             <div className="row">
               <figure className="product-main-image">
-                <Zoom >
+                <Zoom>
                   <img
                     id="product-zoom"
                     src={mainImage || images?.[0]}
@@ -106,8 +105,7 @@ const ProductDetailTop = ({
                       }}
                       key={color}
                       onClick={(e) => _onColorChange(color)}
-                    >
-                    </div>
+                    ></div>
                   );
                 })}
               </div>
@@ -130,7 +128,6 @@ const ProductDetailTop = ({
                   data-decimals={0}
                   required
                   ref={quantityRef}
-                  
                   onInput={(e) => {
                     if (e.target.value > stock) {
                       message.error("Quantity Exceeds Stock");
@@ -139,23 +136,18 @@ const ProductDetailTop = ({
                       e.target.value = 1;
                     }
                   }}
-                  onKeyDown={(e) => e.preventDefault()}// Ngăn chặn tất cả các phím nhập
+                  onKeyDown={(e) => e.preventDefault()} // Ngăn chặn tất cả các phím nhập
                 />
               </div>
             </div>
             <div className="product-details-action">
-              <a className="btn-product btn-cart" onClick={handleAddToCart}  >
-                <span style={{cursor:"pointer"}} >add to cart</span>
-              </a>
-              <div className="details-action-wrapper">
-                <a
-                  href="#"
-                  className="btn-product btn-wishlist"
-                  title="Wishlist"
-                >
-                  <span style={{cursor:"pointer"}}>Add to Wishlist</span>
+              {stock > 1 ? (
+                <a className="btn-product btn-cart" onClick={handleAddToCart}>
+                  <span style={{ cursor: "pointer" }}>add to cart</span>
                 </a>
-              </div>
+              ) : (
+                <><p style={{color:"#fcb941", fontWeight:500}} >This product is out stock</p></>
+              )}
             </div>
             <div className="product-details-footer">
               <div className="product-cat">

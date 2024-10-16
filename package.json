@@ -16,10 +16,12 @@
     "@reduxjs/toolkit": "^2.2.7",
     "antd": "^5.18.3",
     "axios": "^1.7.2",
-    "dayjs": "^1.11.11",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
+    "jquery": "^3.7.1",
     "moment": "^2.30.1",
     "nouislider": "^15.8.1",
+    "owl.carousel": "^2.3.4",
     "query-string": "^9.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -31,6 +33,7 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "styled-components": "^6.1.12",
+    "swiper": "^11.1.14",
     "wnumb": "^1.2.0"
   },
   "devDependencies": {

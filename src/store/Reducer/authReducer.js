@@ -2,7 +2,7 @@ import { authenService } from "@/services/authenService";
 import { localToken } from "@/utils/token";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
-import { handleAddCart } from "./cartReducer";
+import {clearCart, handleGetCart } from "./cartReducer";
 
 const initialState = {
   showModal: "",
@@ -31,12 +31,7 @@ export const authSlice = createSlice({
       state.showModal = "";
     },
 
-    handleLogout: (state) => {
-      localToken.remove();
-      state.profile = null;
-      state.showModal = "";
-      message.success("Logout success");
-    },
+   
   },
 
 
@@ -79,13 +74,26 @@ export const authSlice = createSlice({
         state.error = action.error.message;
         state.loading.login = false;
       
-      });
+      })
+      .addCase(handleLogout.fulfilled,(state) => {
+        state.profile = null;
+        state.showModal = "";
+      
+      })
   },
 });
 
-export const { handleCloseModal, handleLogout, handleShowModal } =  authSlice.actions;
+export const { handleCloseModal, handleShowModal } =  authSlice.actions;
  
 export default authSlice.reducer;
+
+
+export const handleLogout = createAsyncThunk("auth/handleLogout", async (_, { dispatch }) => {
+  // Xoá token
+  localToken.remove();
+  dispatch(clearCart())
+  message.success("Logout success");
+});
 
 export const handleLogin = createAsyncThunk(
   "auth/handleLogin",
@@ -106,7 +114,7 @@ export const handleLogin = createAsyncThunk(
         if (!!localToken) {
           message.success("Đăng nhập thành công");
           dispatch(handleGetProfile());
-          dispatch(handleAddCart());
+          dispatch(handleGetCart());
           dispatch(handleCloseModal());
         }
         return {

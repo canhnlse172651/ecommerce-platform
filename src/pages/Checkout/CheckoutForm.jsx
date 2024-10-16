@@ -16,6 +16,7 @@ const CheckoutForm = ({ handleCheckout }) => {
 
   const { firstName, phone, district, province, ward, street, email } =
     profile || {};
+   
   const {
     product,
     subTotal,
@@ -99,15 +100,6 @@ const CheckoutForm = ({ handleCheckout }) => {
   };
 
   const _onSubmit = (data) => {
-    const formInfo = {
-      ...data,
-      province: provinces.find((item) => item.value === provinceId),
-      district: districts.find((item) => item.value === districtId),
-      ward: wards.find((item) => item.value === wardId),
-      paymentMethod,
-      cartInfor,
-    };
-
     handleCheckout?.({
       formInfo: {
         ...data,
@@ -173,7 +165,7 @@ const CheckoutForm = ({ handleCheckout }) => {
           </div>
           <div className="row">
             <div className="col-sm-4">
-              <Controller
+            <Controller
                 name="province"
                 control={control}
                 rules={{
@@ -193,6 +185,8 @@ const CheckoutForm = ({ handleCheckout }) => {
                         onChange={(value) => {
                           field.onChange(value); // Cập nhật giá trị vào form
                           _onProvinceChange(value); // Thay đổi giá trị province
+
+        
                         }}
                         filterOption={(input, option) => {
                           return removeVietnameseAccent(option?.label ?? "")
@@ -229,6 +223,7 @@ const CheckoutForm = ({ handleCheckout }) => {
                       <Select
                         className="customSelect"
                         suffixIcon={<></>}
+                        value={districtId}
                         showSearch
                         placeholder="Select a District/Town"
                         optionFilterProp="children"
@@ -270,6 +265,7 @@ const CheckoutForm = ({ handleCheckout }) => {
                       <label>Wards/street*</label>
                       <Select
                         className="customSelect"
+                        value={wardId}
                         suffixIcon={<></>}
                         showSearch
                         placeholder="Select a Ward/street*"
@@ -317,19 +313,7 @@ const CheckoutForm = ({ handleCheckout }) => {
             rows={4}
             placeholder="Notes about your order"
           />
-          <div className="custom-control">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id="checkout-create-acc"
-            />
-            <label
-              className="custom-control-label"
-              htmlFor="checkout-create-acc"
-            >
-              Create an account?
-            </label>
-          </div>
+          
         </div>
         <aside className="col-lg-3">
           <div className="summary">

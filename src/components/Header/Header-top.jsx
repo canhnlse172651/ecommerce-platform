@@ -2,14 +2,14 @@ import { MODAL_TYPE } from "@/constant/general";
 import { localToken } from "@/utils/token";
 import { useDispatch, useSelector } from "react-redux";
 import { handleLogout, handleShowModal } from "@/store/Reducer/authReducer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PATHS } from "@/constant/path";
 
 const HeaderTop = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { profile, loading } = useSelector((state) => state.auth);
+  const { profile} = useSelector((state) => state.auth);
 
   return (
     <div className="header-top">
@@ -49,18 +49,16 @@ const HeaderTop = () => {
                   <li>
                     <ul>
                       <li>
-                        <a href="dashboard.html">Account Details</a>
+                        <Link to={PATHS.PROFILE.INDEX}>Account Details</Link>
                       </li>
                       <li>
-                        <a href="dashboard.html">Your Orders</a>
+                        <Link to={PATHS.PROFILE.PROFILE_ORDER}>Your Orders</Link>
                       </li>
                       <li>
-                        <a href="dashboard.html">
-                          Wishlist <span>(3)</span>
-                        </a>
+                       
                       </li>
                       <li>
-                        <a
+                        <Link
                           onClick={(e) => {
                             e.preventDefault();
                             dispatch(handleLogout());
@@ -69,7 +67,7 @@ const HeaderTop = () => {
                           href="#"
                         >
                           Sign Out
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </li>

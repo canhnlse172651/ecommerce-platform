@@ -93,13 +93,15 @@ export const handleGetCart = createAsyncThunk(
     }
   }
 );
-
 export const handleAddCart = createAsyncThunk(
   "cart/add",
   async (actionPayload, thunkApi) => {
     try {
       const { addId, addColor, addQuantity, addPrice } = actionPayload;
       const { cartInfor } = thunkApi.getState()?.cart || {};
+     
+
+      // find the product already exit on cart
 
       let addPayload = {};
       if (cartInfor?.id) {
@@ -153,8 +155,6 @@ export const handleAddCart = createAsyncThunk(
           paymentMethod: "",
         };
       }
-
-      console.log("🚀---->addPayload", addPayload);
 
       const cartRes = await cartService.updateCart(addPayload);
       thunkApi.dispatch(handleGetCart());

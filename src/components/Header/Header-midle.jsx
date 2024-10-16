@@ -110,7 +110,7 @@ const HeaderMidle = () => {
         </div>
         <nav className="main-nav">
           <ul className="menu">
-            <li className="active">
+            <li>
               <NavLink to={PATHS.HOME}>Home</NavLink>
             </li>
             <li>

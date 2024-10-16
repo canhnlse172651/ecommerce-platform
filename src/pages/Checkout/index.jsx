@@ -116,7 +116,7 @@ const Checkout = () => {
         if(res?.data?.data){
           dispatch(handleGetCart())
           message.success("Checkout successfully")
-          // navigate(PATHS.CHECKOUT_SUCCESS)
+          navigate(PATHS.CHECKOUT_SUCCESS)
         }else{
           message.error("Checkout fail")
         }

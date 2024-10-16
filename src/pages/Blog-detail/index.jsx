@@ -1,36 +1,52 @@
+import useQuery from "@/hooks/useQuery";
+import { Link, useParams } from "react-router-dom";
+import { blogService } from "@/services/blogService";
+import { PATHS } from "@/constant/path";
+import Breadcrumb from "@/components/Breadcrumb";
+
 const BlogDetail = () => {
+  const { slug } = useParams();
+  console.log("🚀---->slug", slug);
+
+  const { data: BlogDetailData, error } = useQuery(() =>
+    blogService.getBlogBySlug(slug)
+  );
+
+  const { author, id, image, name } = BlogDetailData || {};
+
+  console.log('🚀---->author',author );
+
+  console.log("🚀---->BlogDetailData", BlogDetailData);
   return (
     <main className="main">
       <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
         <div className="container">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
-            </li>
-            <li className="breadcrumb-item">
-              <a href="#">Blog</a>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              Sed adipiscing ornare risus.
-            </li>
-          </ol>
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              <Link to={PATHS.HOME}> Home </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to={PATHS.BLOG}>Blog</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item isActive>{name}</Breadcrumb.Item>
+          </Breadcrumb>
         </div>
       </nav>
       <div className="page-content">
         <div className="container">
           <div className="row">
-            <div className="col-lg-9">
+            <div className="col-lg-12">
               <article className="entry single-entry">
                 <div className="entry-body">
                   <figure className="entry-media">
                     <img
-                      src="assets/images/blog/single/1.jpg"
+                      src={image}
                       alt="image desc"
                     />
                   </figure>
                   <h1 className="entry-title entry-title-big">
                     {" "}
-                    Sed adipiscing ornare risus.{" "}
+                  {name}
                   </h1>
                   <div className="entry-meta">
                     <span>Nov 22, 2018</span>
@@ -73,7 +89,7 @@ const BlogDetail = () => {
                     </p>
                     <div className="pb-1" />
                     <img
-                      src="assets/images/blog/single/fullwidth-sidebar/5.jpg"
+                      src={image}
                       alt="image"
                     />
                     <div className="pb-1" />
@@ -154,7 +170,7 @@ const BlogDetail = () => {
                   </div>
                 </div>
               </article>
-              <nav className="pager-nav" aria-label="Page navigation">
+              {/* <nav className="pager-nav" aria-label="Page navigation">
                 <a
                   className="pager-link pager-link-prev"
                   href="blog-single.html"
@@ -179,8 +195,8 @@ const BlogDetail = () => {
                     Praesent placerat risus
                   </span>
                 </a>
-              </nav>
-              <div className="related-posts">
+              </nav> */}
+              {/* <div className="related-posts">
                 <h3 className="title">Related Posts</h3>
                 <div
                   className="owl-carousel owl-simple"
@@ -302,8 +318,8 @@ const BlogDetail = () => {
                     </div>
                   </article>
                 </div>
-              </div>
-              <div className="comments">
+              </div> */}
+              {/* <div className="comments">
                 <h3 className="title">3 Comments</h3>
                 <ul>
                   <li>
@@ -403,8 +419,8 @@ const BlogDetail = () => {
                     </div>
                   </li>
                 </ul>
-              </div>
-              <div className="reply">
+              </div> */}
+              {/* <div className="reply">
                 <div className="heading">
                   <h3 className="title">Leave A Reply</h3>
                   <p className="title-desc">
@@ -459,9 +475,9 @@ const BlogDetail = () => {
                     <i className="icon-long-arrow-right" />
                   </button>
                 </form>
-              </div>
+              </div> */}
             </div>
-            <aside className="col-lg-3">
+            {/* <aside className="col-lg-3">
               <div className="sidebar">
                 <div className="widget widget-search">
                   <h3 className="widget-title">Search</h3>
@@ -608,13 +624,12 @@ const BlogDetail = () => {
                   </div>
                 </div>
               </div>
-            </aside>
+            </aside> */}
           </div>
         </div>
       </div>
     </main>
   );
 };
-
 
 export default BlogDetail;

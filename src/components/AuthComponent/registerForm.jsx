@@ -18,14 +18,9 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm();
 
-  console.log('🚀1---->', 1);
-
-  const password = watch("password");
-
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
-    console.log('data', data)
     if (data) {
       setLoading(true);
       const { name, email, password } = data;
@@ -35,7 +30,6 @@ const RegisterForm = () => {
         email,
         password,
       };
-      console.log('payload', payload)
 
       const res = await dispatch(handleRegister(payload)).unwrap();
 
