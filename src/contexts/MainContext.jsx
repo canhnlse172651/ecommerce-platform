@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useContext, createContext } from "react";
+import $ from "jquery";
 
 const MainContext = createContext({});
 
