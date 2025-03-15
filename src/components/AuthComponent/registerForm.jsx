@@ -19,8 +19,11 @@ const RegisterForm = () => {
   } = useForm();
 
   const [loading, setLoading] = useState(false);
+  const password = watch("password");
 
   const onSubmit = async (data) => {
+    console.log(data);
+
     if (data) {
       setLoading(true);
       const { name, email, password } = data;
@@ -99,7 +102,7 @@ const RegisterForm = () => {
                 required: MESSAGE.policy,
               })}
             />
-            <label  htmlFor="register-policy">
+            <label htmlFor="register-policy">
               I agree to the <a href="privacy-policy.html">privacy policy</a> *
             </label>
             {errors?.isAgree?.message && (
